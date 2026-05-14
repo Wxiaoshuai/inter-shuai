@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm init *)",
+      "WebFetch(domain:minimax-algeng-chat-tts.oss-cn-wulanchabu.aliyuncs.com)",
+      "Bash(npx skills *)",
+      "Bash(python -c \"from src.db.mysql import init_database; import asyncio; asyncio.run\\(init_database\\(\\)\\)\")",
+      "Bash(git add *)"
+    ]
+  }
+}

@@ -1,0 +1,141 @@
+/* Global CSS Variables & Reset */
+
+:root {
+  /* Colors - Dark Glassmorphism with oklch */
+  --color-bg-primary: oklch(18% 0.02 265);
+  --color-bg-secondary: oklch(22% 0.015 280);
+  --color-bg-card: oklch(26% 0.02 280);
+  --color-bg-card-hover: oklch(32% 0.02 280);
+
+  --color-accent: oklch(68% 0.14 175);
+  --color-accent-dim: oklch(55% 0.12 175);
+  --color-accent-glow: oklch(70% 0.18 175);
+
+  --color-text-primary: oklch(95% 0.01 250);
+  --color-text-secondary: oklch(70% 0.02 250);
+  --color-text-muted: oklch(50% 0.02 250);
+
+  --color-border: oklch(30% 0.02 280);
+  --color-border-light: oklch(40% 0.02 280);
+
+  /* Typography */
+  --font-family: 'Sora', 'DM Sans', system-ui, sans-serif;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-3xl: 3rem;
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px oklch(0% 0 0 / 0.3);
+  --shadow-md: 0 4px 16px oklch(0% 0 0 / 0.4);
+  --shadow-lg: 0 8px 32px oklch(0% 0 0 / 0.5);
+  --shadow-glow: 0 0 24px oklch(68% 0.14 175 / 0.3);
+
+  /* Transitions */
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  background: linear-gradient(145deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-light);
+}
+
+/* Utility */
+.text-wrap-pretty {
+  text-wrap: pretty;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--duration-normal) var(--ease-out);
+}
+
+.animate-slide-up {
+  animation: slideUp var(--duration-slow) var(--ease-out);
+}

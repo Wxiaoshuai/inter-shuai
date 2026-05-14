@@ -1,0 +1,25 @@
+# Python
+python/.venv/
+python/__pycache__/
+python/*.pyc
+python/.env
+python/src/__pycache__/
+
+# Node
+web/node_modules/
+web/.nuxt/
+web/.output/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# Uploads and outputs (runtime data)
+uploads/
+outputs/
