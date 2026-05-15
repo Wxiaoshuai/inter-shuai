@@ -37,7 +37,10 @@ if [ ! -f "$PROJECT_ROOT/python/.env" ]; then
     if [ -f "$PROJECT_ROOT/python/.env.example" ]; then
         warn ".env file not found. Creating from .env.example..."
         cp "$PROJECT_ROOT/python/.env.example" "$PROJECT_ROOT/python/.env"
-        warn "Please edit python/.env and set your API keys before starting."
+        warn "IMPORTANT: Please edit python/.env and set these keys:"
+        warn "  - DEEPSEEK_API_KEY (required for LLM)"
+        warn "  - BAILIAN_API_KEY (required for embedding)"
+        warn "  - MYSQL_PASSWORD (required for database)"
     else
         warn ".env file not found. You may need to create one manually."
     fi
