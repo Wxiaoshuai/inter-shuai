@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # FastAPI Backend
+  app:
+    build:
+      context: ./python
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-ai_rag_password}
+      - MYSQL_DATABASE=ai_rag
+      - MILVUS_HOST=milvus
+      - MILVUS_PORT=19530
+      - DASHSCOPE_API_KEY=${DASHSCOPE_API_KEY}
+    volumes:
+      - ./python/uploads:/app/uploads
+      - ./python/outputs:/app/outputs
+    depends_on:
+      mysql:
+        condition: service_healthy
+      milvus:
+        condition: service_healthy
+    networks:
+      - ai-rag-network
+    restart: unless-stopped
+
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD:-ai_rag_password}
+      - MYSQL_DATABASE=ai_rag
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ai-rag-network
+    restart: unless-stopped
+
+  # Milvus Vector Database
+  milvus:
+    image: milvusdb/milvus:v2.3.3
+    ports:
+      - "19530:19530"
+      - "9091:9091"
+    volumes:
+      - milvus_data:/var/lib/milvus
+    environment:
+      - ETCD_USE_EMBED=true
+      - COMMON_STORAG_TYPE=local
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9091/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - ai-rag-network
+    restart: unless-stopped
+
+networks:
+  ai-rag-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
+  milvus_data:

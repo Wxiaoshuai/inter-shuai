@@ -141,3 +141,68 @@ DASHSCOPE_API_KEY=your_api_key
 - 上传文件存储在 `python/uploads/`
 - 生成的图表存储在 `python/outputs/`
 - 删除任务时会同时清理相关文件
+
+## Docker 部署
+
+### 环境要求
+- Docker 20.10+
+- Docker Compose 2.0+
+
+### 快速启动
+
+```bash
+# 复制并编辑环境变量
+cp python/.env.example python/.env
+# 编辑 python/.env，填入你的 API Keys
+
+# 启动所有服务（包含 MySQL + Milvus）
+./scripts/docker.sh up
+
+# 或使用 docker-compose 直接启动
+docker-compose up -d
+```
+
+### 服务地址
+| 服务 | 地址 |
+|------|------|
+| 应用 API | http://localhost:8000 |
+| API 文档 | http://localhost:8000/docs |
+| Milvus | localhost:19530 |
+| MySQL | localhost:3306 |
+
+### Docker 管理命令
+
+```bash
+./scripts/docker.sh up      # 启动服务
+./scripts/docker.sh down    # 停止服务
+./scripts/docker.sh restart # 重启服务
+./scripts/docker.sh build   # 仅构建镜像
+./scripts/docker.sh clean   # 清理所有数据
+./scripts/docker.sh logs    # 查看日志
+```
+
+### 前端单独运行（开发模式）
+
+```bash
+cd web
+npm install
+npm run dev
+# 访问 http://localhost:3000
+```
+
+### 数据持久化
+
+- `python/uploads/` - 上传的文件（容器内 `/app/uploads`）
+- `python/outputs/` - 生成的图表（容器内 `/app/outputs`）
+- MySQL 数据 - 存储在 `mysql_data` volume
+- Milvus 数据 - 存储在 `milvus_data` volume
+
+### 清理
+
+```bash
+# 停止服务并删除所有数据
+./scripts/docker.sh clean
+
+# 仅停止服务，保留数据
+./scripts/docker.sh down
+```
