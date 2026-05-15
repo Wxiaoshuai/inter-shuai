@@ -21,6 +21,17 @@ warn() {
     echo -e "${YELLOW}[WARN]${NC} $1"
 }
 
+# Check for docker compose command (newer Docker uses "docker compose" vs older "docker-compose")
+if docker compose version &>/dev/null; then
+    DOCKER_COMPOSE="docker compose"
+elif docker-compose version &>/dev/null; then
+    DOCKER_COMPOSE="docker-compose"
+else
+    echo "ERROR: Neither 'docker compose' nor 'docker-compose' is installed."
+    echo "Please install Docker Compose or upgrade Docker."
+    exit 1
+fi
+
 # Check if .env file exists
 if [ ! -f "$PROJECT_ROOT/python/.env" ]; then
     if [ -f "$PROJECT_ROOT/python/.env.example" ]; then
@@ -39,27 +50,27 @@ case $COMMAND in
     up|start)
         info "Building and starting Docker containers..."
         cd "$PROJECT_ROOT"
-        docker-compose up -d --build
+        $DOCKER_COMPOSE up -d --build
         info "Services starting up..."
         info "  - App:      http://localhost:8000"
         info "  - API Doc:  http://localhost:8000/docs"
         info "  - Milvus:   localhost:19530"
         info "  - MySQL:    localhost:3306"
         echo ""
-        info "To view logs: docker-compose logs -f app"
+        info "To view logs: $DOCKER_COMPOSE logs -f app"
         ;;
 
     down|stop)
         info "Stopping Docker containers..."
         cd "$PROJECT_ROOT"
-        docker-compose down
+        $DOCKER_COMPOSE down
         info "Containers stopped."
         ;;
 
     restart)
         info "Restarting Docker containers..."
         cd "$PROJECT_ROOT"
-        docker-compose restart
+        $DOCKER_COMPOSE restart
         info "Containers restarted."
         ;;
 
@@ -73,14 +84,14 @@ case $COMMAND in
     clean)
         info "Stopping and removing containers, networks, and volumes..."
         cd "$PROJECT_ROOT"
-        docker-compose down -v --rmi local
+        $DOCKER_COMPOSE down -v --rmi local
         warn "Clean complete. Note: Uploads and outputs directories were preserved."
         ;;
 
     logs)
         SERVICE=${2:-app}
         info "Showing logs for $SERVICE..."
-        docker-compose logs -f $SERVICE
+        $DOCKER_COMPOSE logs -f $SERVICE
         ;;
 
     *)
