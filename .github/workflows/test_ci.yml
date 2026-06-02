@@ -1,0 +1,20 @@
+name: "test_ci"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container: astral/uv:python3.12-bookworm-slim
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v6
+      - name: "Install dependencies"
+        run: uv sync
+      - name: "Run tests"
+        run: uv run pytest test/
