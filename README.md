@@ -209,3 +209,5 @@ npm run dev
 
 # CI / CD
 ## CI持续集成
+- 官方文档：
+https://docs.github.com/zh/actions/reference/workflows-and-actions/events-that-trigger-workflows
