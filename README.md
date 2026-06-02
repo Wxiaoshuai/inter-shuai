@@ -206,3 +206,6 @@ npm run dev
 # 仅停止服务，保留数据
 ./scripts/docker.sh down
 ```
+
+# CI / CD
+## CI持续集成
