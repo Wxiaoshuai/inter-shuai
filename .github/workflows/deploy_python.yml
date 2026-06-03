@@ -1,9 +1,9 @@
-name: "Deploy"
+name: "Deploy python"
 
 on:
   push:
     tags:
-      - v*
+      - py-v*
     
 jobs:
   deploy:
@@ -18,8 +18,8 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
-          source: "./"
-          target: "/opt/inter-shuai/"
+          source: "./python"
+          target: "/opt/inter-shuai/python/"
       - name: "Restart server"
         uses: appleboy/ssh-action@v1
         with:
