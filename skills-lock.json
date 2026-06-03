@@ -6,6 +6,12 @@
       "sourceType": "github",
       "skillPath": "skills/frontend-design/SKILL.md",
       "computedHash": "516bd2154eb843a8240e43d5b285229129853114ad7075a5e141e1c08e408c84"
+    },
+    "understand-anything-knowledge-graph": {
+      "source": "aradotso/trending-skills",
+      "sourceType": "github",
+      "skillPath": "skills/understand-anything-knowledge-graph/SKILL.md",
+      "computedHash": "f46d1f02a25e8662307f3b3c818917f242c34f7f2da8ceefce1aa9d9e03827fe"
     }
   }
 }
