@@ -15,6 +15,6 @@ jobs:
       - name: "Checkout code"
         uses: actions/checkout@v6
       - name: "Install dependencies"
-        run: uv sync
+        run: cd python && uv sync
       - name: "Run tests"
-        run: uv run pytest test/
+        run: cd python && uv run pytest test/
