@@ -17,18 +17,21 @@ jobs:
         with:
           node-version: '23'
           cache: 'npm'
+          cache-dependency-path: web/package-lock.json
 
       - name: "Install dependencies"
-        run: cd web && npm install
+        run: npm install
+        working-directory: web
 
       - name: "Build project"
-        run: cd web && npm run build
+        run: npm run build
+        working-directory: web
 
       - name: "Upload build artifacts"
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: dist/
+          path: web/dist/
 
       - name: "Upload to yun server"
         uses: appleboy/scp-action@master
@@ -37,5 +40,6 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
-          source: "dist/"
+          source: "web/dist/"
           target: "/var/www/html/"
+          strip_components: 2
