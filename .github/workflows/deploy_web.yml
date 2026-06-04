@@ -41,8 +41,8 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
           script: |
-            rm -rf /var/www/dist.backup/
-            mv /var/www/dist/ /var/www/dist.backup/
+            sudo rm -rf /var/www/dist.backup/
+            sudo mv /var/www/dist/ /var/www/dist.backup/
 
       - name: "Upload to yun server"
         uses: appleboy/scp-action@master
