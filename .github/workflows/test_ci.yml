@@ -2,10 +2,10 @@ name: "test_ci"
 
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
-    types: [opened, synchronize]
+    branches: [test]
+  # pull_request:
+  #   branches: [master]
+  #   types: [opened, synchronize]
 
 jobs:
   test:
