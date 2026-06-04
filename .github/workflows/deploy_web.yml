@@ -33,6 +33,17 @@ jobs:
           name: dist
           path: web/dist/
 
+      - name: "Cp old dist to backup"
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: 22
+          script: |
+            rm -rf /var/www/dist.backup/
+            mv /var/www/dist/ /var/www/dist.backup/
+
       - name: "Upload to yun server"
         uses: appleboy/scp-action@master
         with:
@@ -41,5 +52,5 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 22
           source: "web/dist/"
-          target: "/var/www/html/"
+          target: "/var/www/dist/"
           strip_components: 2
