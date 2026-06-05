@@ -203,17 +203,25 @@ class RAGService:
 
         collection_infos = []
         for name in collections:
-            try:
-                stats = milvus_manager.get_collection_stats(name)
-                collection_infos.append(
-                    CollectionInfo(
-                        name=name,
-                        row_count=stats.get("row_count", 0),
-                        dimension=stats.get("dimension"),
-                    )
+            collection_infos.append(
+                CollectionInfo(
+                    name=name,
+                    row_count=0,
+                    dimension=None,
                 )
-            except Exception:
-                collection_infos.append(CollectionInfo(name=name, row_count=0))
+            )
+        # for name in collections:
+        #     try:
+        #         stats = milvus_manager.get_collection_stats(name)
+        #         collection_infos.append(
+        #             CollectionInfo(
+        #                 name=name,
+        #                 row_count=stats.get("row_count", 0),
+        #                 dimension=stats.get("dimension"),
+        #             )
+        #         )
+        #     except Exception:
+        #         collection_infos.append(CollectionInfo(name=name, row_count=0))
 
         return CollectionListResponse(collections=collection_infos)
 
